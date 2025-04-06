@@ -4,13 +4,17 @@
   <meta charset="UTF-8" />
   <title>Bridge Page</title>
   <script>
-    const payload = sessionStorage.getItem("gpt_fullpage_batches");
+    const payload = window.name;
     if (payload) {
-      const url = "https://chatgpt.com/c/67eadc91-0c54-8002-9ec6-0b86b402fad7";
-      window.name = payload;
-      window.location.href = url;
+      try {
+        const data = JSON.parse(payload);
+        sessionStorage.setItem("gpt_fullpage_batches", JSON.stringify(data));
+        window.location.href = "https://chatgpt.com/c/67eadc91-0c54-8002-9ec6-0b86b402fad7";
+      } catch (e) {
+        document.body.innerHTML = "<h2>❌ 資料格式錯誤！</h2>";
+      }
     } else {
-      document.body.innerHTML = "<h2>❌ 無法取得資料！請從原始頁面啟動腳本。</h2>";
+      document.body.innerHTML = "<h2>❌ 沒有資料可讀取！</h2>";
     }
   </script>
 </head>
